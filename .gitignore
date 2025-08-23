@@ -1,0 +1,94 @@
+# These are some examples of commonly ignored file patterns.
+# You should customize this list as applicable to your project.
+
+# =========================
+# Python artifacts
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+.venv/
+env/
+ENV/
+
+# =========================
+# Python version managers
+# =========================
+.python-version
+
+# =========================
+# IDEs / Editors
+# =========================
+.idea/         # JetBrains IDEs
+.vscode/       # Visual Studio Code
+
+# =========================
+# Test reports / coverage / logs
+# =========================
+*.log
+logs/
+TEST*.xml
+.coverage
+.coverage.*
+htmlcov/
+
+# =========================
+# Documentation
+# =========================
+docs/_build/
+
+# =========================
+# Operating system files
+# =========================
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+
+# =========================
+# Compiled / binary files
+# =========================
+*.class
+*.jar
+*.app
+*.exe
+*.war
+*.dll
+
+# =========================
+# Large media files
+# =========================
+*.mp4
+*.tiff
+*.avi
+*.flv
+*.mov
+*.wmv
+
+# =========================
+# Environment files
+# =========================
+.env
+.env.dev
+.env.*
+
+# =========================
+# Machine learning / experiments
+# =========================
+# Uncomment if you want to ignore model weights
+# *.pth
+**/wandb/
+
+# =========================
+# Jupyter
+# =========================
+*.ipynb_checkpoints/
