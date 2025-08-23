@@ -1,0 +1,31 @@
+services:
+  python_application_template:
+    image: python_application_template
+    container_name: python_application_template
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: ${DOCKER_BUILD_TARGET:-production}  # default = production
+    networks:
+      - dev_network
+    environment:
+       DISPLAY: "${DISPLAY}"
+       ENV: ${DOCKER_BUILD_TARGET:-production}
+
+    volumes:
+      - ./:/app
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+    shm_size: 8gb
+#
+#     deploy:
+#       resources:
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               count: 1
+#               capabilities: [ gpu ]
+
+networks:
+  dev_network:
+    name: dev_network
