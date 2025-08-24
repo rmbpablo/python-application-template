@@ -9,7 +9,7 @@ requires = [
 name = "python-application-template"
 description = "Template for projects"
 authors = [
-  { name = "PixForce", email = "contato@pixforce.ai" },
+  { name = "Author Name", email = "email@email.com" },
 ]
 requires-python = ">=3.11"
 classifiers = [
