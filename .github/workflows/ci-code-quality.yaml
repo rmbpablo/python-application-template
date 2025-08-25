@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
     - name: Install uv
-      uses: astral-sh/setup-uv@v4
+      uses: astral-sh/setup-uv@v6
     - name: Set up Python
       run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
     - name: Check pre-commit hooks versions
@@ -47,7 +47,7 @@ jobs:
     - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v4
+      uses: astral-sh/setup-uv@v6
 
     - name: Set up Python
       run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
@@ -96,7 +96,7 @@ jobs:
         path: ./
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v4
+      uses: astral-sh/setup-uv@v6
 
     - name: Set up Python
       run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
