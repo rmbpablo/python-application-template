@@ -28,8 +28,10 @@ ENV/
 # =========================
 # IDEs / Editors
 # =========================
-.idea/         # JetBrains IDEs
-.vscode/       # Visual Studio Code
+# JetBrains IDEs
+.idea/
+# Visual Studio Code
+.vscode/
 
 # =========================
 # Test reports / coverage / logs
