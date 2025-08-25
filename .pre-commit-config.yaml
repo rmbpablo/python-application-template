@@ -66,12 +66,12 @@ repos:
     hooks:
       - id: pip-compile
         name: pip-compile requirements.in
-        args: [./requirements/requirements.in, -o, ./requirements/requirements.txt, --python-platform, linux, --python-version, '3.11']
+        args: [requirements/requirements.in, -o, requirements/requirements.txt, --python-platform, linux, --python-version, '3.11']
         files: ^requirements/
 
       - id: pip-compile
         name: pip-compile requirements-dev.in
-        args: [./requirements/requirements-dev.in, -o, ./requirements/requirements-dev.txt, --python-platform, linux, --python-version, '3.11']
+        args: [requirements/requirements-dev.in, -o, requirements/requirements-dev.txt, --python-platform, linux, --python-version, '3.11']
         files: ^requirements/
         # project_root/.pre-commit-config.yaml
   #
