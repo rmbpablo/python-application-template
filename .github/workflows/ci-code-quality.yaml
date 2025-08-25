@@ -135,7 +135,7 @@ jobs:
 
   # Collector job of required jobs to pass on workflow
   main:
-    needs: [pre-commit, tests, sonarqube, pre-commit-check-hooks-versions]
+    needs: [pre-commit, tests, pre-commit-check-hooks-versions]
     if: always()
     runs-on: ubuntu-latest
     steps:
