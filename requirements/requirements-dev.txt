@@ -3,10 +3,10 @@
 cfgv==3.4.0
     # via pre-commit
 covdefaults==2.3.0
-    # via -r ./requirements/requirements-dev.in
-coverage==7.10.4
+    # via -r requirements/requirements-dev.in
+coverage==7.10.5
     # via
-    #   -r ./requirements/requirements-dev.in
+    #   -r requirements/requirements-dev.in
     #   covdefaults
 distlib==0.4.0
     # via virtualenv
@@ -25,11 +25,11 @@ platformdirs==4.3.8
 pluggy==1.6.0
     # via pytest
 pre-commit==4.3.0
-    # via -r ./requirements/requirements-dev.in
+    # via -r requirements/requirements-dev.in
 pygments==2.19.2
     # via pytest
 pytest==8.4.1
-    # via -r ./requirements/requirements-dev.in
+    # via -r requirements/requirements-dev.in
 pyyaml==6.0.2
     # via pre-commit
 virtualenv==20.34.0
