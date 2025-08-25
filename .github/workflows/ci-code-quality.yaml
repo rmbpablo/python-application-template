@@ -1,0 +1,144 @@
+name: Code quality
+
+on:
+  push:
+    branches: [main, test-me-*]
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: 3.12.7
+
+jobs:
+  pre-commit-check-hooks-versions:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+    - name: Set up Python
+      run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
+    - name: Check pre-commit hooks versions
+      shell: bash
+      run: |
+        uv pip install pre-commit
+        uv run pre-commit autoupdate
+        git diff --exit-code
+
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - uses: pre-commit/action@v3.0.1
+    - uses: pre-commit-ci/lite-action@v1.1.0
+      if: always()
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
+
+    - name: Install the project
+      run: uv pip install --editable .[dev]
+
+    - name: Run tests suite
+      shell: bash -l {0}
+      run: |
+        uv run coverage erase && \
+        uv run coverage run --data-file=coverage-db -m pytest -vv ./tests/
+
+    - name: Generate coverage report
+      continue-on-error: true
+      run: uv run coverage xml --data-file=coverage-db -o coverage.xml
+
+    - name: Upload coverage report xml
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage.xml
+        path: coverage.xml
+        if-no-files-found: error
+        retention-days: 1
+
+    - name: Upload coverage database
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-db
+        path: coverage-db
+        if-no-files-found: error
+        retention-days: 1
+
+  coverage:
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+
+    - name: Download coverage reports
+      uses: actions/download-artifact@v4
+      with:
+        name: coverage-db
+        path: ./
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+
+    - name: Set up Python
+      run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
+
+    - name: Install the project
+      run: uv pip install --editable .[dev]
+
+    - name: Coverage report
+      run: uv run coverage report --data-file=./coverage-db --show-missing --skip-covered
+
+  sonarqube:
+    needs: [tests]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+
+    - name: Download coverage reports
+      uses: actions/download-artifact@v4
+      with:
+        name: coverage.xml
+        path: ./
+
+    - name: SonarQube Scan
+      uses: sonarsource/sonarqube-scan-action@v4
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+    - name: SonarQube Quality Gate check
+      uses: sonarsource/sonarqube-quality-gate-action@master
+      # Force to fail step after specific time.
+      timeout-minutes: 5
+      env:
+       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  # Collector job of required jobs to pass on workflow
+  main:
+    needs: [pre-commit, tests, sonarqube, pre-commit-check-hooks-versions]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+    - name: check for failures
+      if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+      run: echo job failed && exit 1
