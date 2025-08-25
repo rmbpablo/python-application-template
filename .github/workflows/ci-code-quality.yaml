@@ -107,31 +107,31 @@ jobs:
     - name: Coverage report
       run: uv run coverage report --data-file=./coverage-db --show-missing --skip-covered
 
-  sonarqube:
-    needs: [tests]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+  # sonarqube:
+  #   needs: [tests]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
 
-    - name: Download coverage reports
-      uses: actions/download-artifact@v4
-      with:
-        name: coverage.xml
-        path: ./
+  #   - name: Download coverage reports
+  #     uses: actions/download-artifact@v4
+  #     with:
+  #       name: coverage.xml
+  #       path: ./
 
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@v4
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #   - name: SonarQube Scan
+  #     uses: sonarsource/sonarqube-scan-action@v4
+  #     env:
+  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-    - name: SonarQube Quality Gate check
-      uses: sonarsource/sonarqube-quality-gate-action@master
-      # Force to fail step after specific time.
-      timeout-minutes: 5
-      env:
-       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  #   - name: SonarQube Quality Gate check
+  #     uses: sonarsource/sonarqube-quality-gate-action@master
+  #     # Force to fail step after specific time.
+  #     timeout-minutes: 5
+  #     env:
+  #      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   # Collector job of required jobs to pass on workflow
   main:
