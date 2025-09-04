@@ -31,10 +31,9 @@ python-application-template = "python_application_template.__main__:main"
 [tool.setuptools]
 zip-safe = true
 include-package-data = false
-package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
 
 [tool.setuptools_scm]
 version_scheme = "only-version"
@@ -125,7 +124,7 @@ lint.select = [
     skip-magic-trailing-comma = false
 
   [tool.ruff.lint.isort]
-    known-first-party = ["src", "tests", "testing", "python-application-template"]
+    known-first-party = ["python_application_template", "tests", "testing"]
     split-on-trailing-comma = true
     required-imports = ["from __future__ import annotations"]
     force-single-line = true
@@ -142,9 +141,7 @@ lint.select = [
 
 [tool.coverage.run]
 branch = true
-source = [
-  "src",
-]
+source = ["python_application_template"]
 relative_files = true
 plugins = [
   "covdefaults",
