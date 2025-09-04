@@ -6,7 +6,7 @@ FROM python:3.13.7-slim AS builder
 WORKDIR /tmp/_build/
 
 # Copy source and requirements
-COPY ./src/ ./src/
+COPY ./python_application_template/ ./python_application_template/
 COPY ./requirements/ ./requirements/
 COPY pyproject.toml pyproject.toml ./
 
@@ -36,12 +36,12 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN addgroup --gid 1001 --system app && \
     adduser --no-create-home --shell /bin/false --disabled-password --uid 1001 --system --group app && \
     apt-get update && apt-get install -y --no-install-recommends \
-        libglib2.0-0t64=2.84.3-1 \
         libgl1=1.7.0-1+b2\
+        libglib2.0-0t64=2.84.3-1 \
         libglx-mesa0=25.0.7-2\
         libsm6=2:1.2.6-1 \
-        libxrender1=1:0.9.12-1 \
         libxext6=2:1.3.4-1+b3 \
+        libxrender1=1:0.9.12-1 \
     && rm -rf /var/lib/apt/lists/*
 
 USER app
@@ -61,13 +61,12 @@ WORKDIR /app
 USER root
 
 # Install extra dependencies for development (pytest, coverage, etc.)
+COPY ./python_application_template/ ./python_application_template/
 COPY ./requirements/ ./requirements/
-#
-# RUN apt-get update && apt-get install -y --no-install-recommends \
-#         git
+COPY pyproject.toml pyproject.toml ./
 
 RUN pip install --no-cache-dir uv==0.8.11 \
-    && uv pip install --no-cache --python /opt/venv/bin/python -r requirements/requirements-dev.txt
+    && uv pip install --no-cache --python /opt/venv/bin/python -e ".[dev]"
 
 USER app
 
