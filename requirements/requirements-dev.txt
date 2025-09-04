@@ -4,7 +4,7 @@ cfgv==3.4.0
     # via pre-commit
 covdefaults==2.3.0
     # via -r requirements/requirements-dev.in
-coverage==7.10.4
+coverage==7.10.6
     # via
     #   -r requirements/requirements-dev.in
     #   covdefaults
