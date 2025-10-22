@@ -18,9 +18,9 @@ jobs:
   pre-commit-check-hooks-versions:
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
     - name: Install uv
-      uses: astral-sh/setup-uv@v4
+      uses: astral-sh/setup-uv@v7
     - name: Set up Python
       run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
     - name: Check pre-commit hooks versions
@@ -33,8 +33,8 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
-    - uses: actions/setup-python@v5
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
+    - uses: actions/setup-python@v6
       with:
         python-version: ${{ env.PYTHON_VERSION }}
     - uses: pre-commit/action@v3.0.1
@@ -44,10 +44,10 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v4
+      uses: astral-sh/setup-uv@v7
 
     - name: Set up Python
       run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
@@ -87,16 +87,16 @@ jobs:
     needs: [tests]
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
 
     - name: Download coverage reports
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: coverage-db
         path: ./
 
     - name: Install uv
-      uses: astral-sh/setup-uv@v4
+      uses: astral-sh/setup-uv@v7
 
     - name: Set up Python
       run: uv python install $PYTHON_VERSION && uv venv -p python$PYTHON_VERSION
@@ -111,10 +111,10 @@ jobs:
   #   needs: [tests]
   #   runs-on: ubuntu-latest
   #   steps:
-  #   - uses: asottile/workflows/.github/actions/fast-checkout@v1.8.0
+  #   - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
 
   #   - name: Download coverage reports
-  #     uses: actions/download-artifact@v4
+  #     uses: actions/download-artifact@v5
   #     with:
   #       name: coverage.xml
   #       path: ./
