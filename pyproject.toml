@@ -11,12 +11,11 @@ description = "Template for projects"
 authors = [
   { name = "Author Name", email = "email@email.com" },
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 dynamic = [
   "dependencies",
@@ -57,7 +56,7 @@ dev = { file = "requirements/requirements-dev.txt" }
 universal = true
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py313"
 line-length = 128
 
 lint.select = [

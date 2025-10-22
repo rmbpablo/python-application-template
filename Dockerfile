@@ -1,7 +1,7 @@
 # ==========================
 # ---------- BUILDER --------
 # ==========================
-FROM python:3.13.7-slim AS builder
+FROM python:2.13.7-slim AS builder
 
 WORKDIR /tmp/_build/
 
