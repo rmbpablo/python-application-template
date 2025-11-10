@@ -18,7 +18,7 @@ jobs:
   pre-commit-check-hooks-versions:
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.10.0
     - name: Install uv
       uses: astral-sh/setup-uv@v7
     - name: Set up Python
@@ -33,7 +33,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.10.0
     - uses: actions/setup-python@v6
       with:
         python-version: ${{ env.PYTHON_VERSION }}
@@ -44,7 +44,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.10.0
 
     - name: Install uv
       uses: astral-sh/setup-uv@v7
@@ -87,7 +87,7 @@ jobs:
     needs: [tests]
     runs-on: ubuntu-latest
     steps:
-    - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
+    - uses: asottile/workflows/.github/actions/fast-checkout@v1.10.0
 
     - name: Download coverage reports
       uses: actions/download-artifact@v5
@@ -111,7 +111,7 @@ jobs:
   #   needs: [tests]
   #   runs-on: ubuntu-latest
   #   steps:
-  #   - uses: asottile/workflows/.github/actions/fast-checkout@v1.9.0
+  #   - uses: asottile/workflows/.github/actions/fast-checkout@v1.10.0
 
   #   - name: Download coverage reports
   #     uses: actions/download-artifact@v5
