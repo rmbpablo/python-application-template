@@ -1,7 +1,7 @@
 # ==========================
 # ---------- BUILDER --------
 # ==========================
-FROM python:2.13.7-slim AS builder
+FROM python:3.14.1-slim AS builder
 
 WORKDIR /tmp/_build/
 
@@ -22,7 +22,7 @@ RUN \
 # ==========================
 # ---------- PRODUCTION -----
 # ==========================
-FROM python:3.13.7-slim AS production
+FROM python:3.14.1-slim AS production
 
 WORKDIR /app
 
