@@ -67,7 +67,7 @@ jobs:
 
     - name: Upload coverage report xml
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: coverage.xml
         path: coverage.xml
@@ -76,7 +76,7 @@ jobs:
 
     - name: Upload coverage database
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: coverage-db
         path: coverage-db
